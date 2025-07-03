@@ -1,69 +1,83 @@
-# React + TypeScript + Vite
+📊 React Spreadsheet-Like Dashboard (InScripts Assignment)
+A responsive, interactive spreadsheet-style web application built using React, TypeScript, Tailwind CSS, and TanStack React Table. The app mimics the look and feel of professional spreadsheet tools (like Airtable or Asana) and allows users to view, filter, sort, and interact with tabular data.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Features
+✅ Spreadsheet-style table layout
+✅ Sorting columns (ascending/descending)
+✅ Status filters (All, Pending, Approved, Completed)
+✅ Colored status badges (based on Figma design)
+✅ Reusable components: Navbar, Button Tabs, Toolbar, Action Buttons
+✅ Built with React + Vite + Tailwind CSS
 
-Currently, two official plugins are available:
+🛠 Tech Stack
+React (with Vite)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+TypeScript
 
-## Expanding the ESLint configuration
+Tailwind CSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+@tanstack/react-table (v8)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+📂 Project Structure
+css
+Copy
+Edit
+src/
+│
+├── components/
+│   ├── Navbar.tsx
+│   ├── Toolbar.tsx
+│   ├── ButtonTabs.tsx
+│   ├── ActionButtons.tsx
+│   └── StatusBadge.tsx
+│
+├── SpreadSheetTable.tsx
+├── App.tsx
+└── main.tsx
+📦 Installation & Running Locally
+1️⃣ Clone the repository
+bash
+Copy
+Edit
+git clone https://github.com/your-username/react-spreadsheet-dashboard.git
+cd react-spreadsheet-dashboard
+2️⃣ Install dependencies
+bash
+Copy
+Edit
+npm install
+3️⃣ Start the development server
+bash
+Copy
+Edit
+npm run dev
+👉 The app will be running at:
+http://localhost:5173
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+📝 How It Works
+The main table is powered by TanStack React Table for efficient rendering, sorting, and filtering.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+The Toolbar and Dropdown Tabs allow toggling additional filters or views.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The StatusBadge component dynamically styles status tags with different colors (following Figma).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+The Navbar and ActionButtons replicate real-world workspace tools.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+🌟 Future Enhancements
+✅ Editable table cells
+
+✅ Row selection and bulk actions
+
+✅ Export to CSV/PDF
+
+✅ Pagination for large datasets
+
+✅ User authentication
+
+📷 Screenshots
+Spreadsheet Table	Status Badges	Toolbar Toggle
+
+🧑‍💻 Author
+Made  by Suyash Pathak
+
+
