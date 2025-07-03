@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react';
+import  { useMemo, useState } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
+  getSortedRowModel,
   flexRender,
+  type ColumnDef,
+  type SortingState,
 } from '@tanstack/react-table';
-import type { ColumnDef } from '@tanstack/react-table';
-
 type Order = {
   id: number;
   jobRequest: string;
@@ -20,6 +21,9 @@ type Order = {
 };
 
 function SpreadSheetTable() {
+  const [sorting, setSorting] = useState<SortingState>([]);
+const [statusFilter] = useState<'All' | 'Pending' | 'Approved' | 'Completed'>('All');
+
   const data = useMemo<Order[]>(
     () => [
       {
@@ -49,42 +53,59 @@ function SpreadSheetTable() {
     { header: 'Due Date', accessorKey: 'dueDate' },
     { header: 'Est. Value', accessorKey: 'estVal' },
   ];
+  const filteredData = useMemo(() => {
+  if (statusFilter === 'All') return data;
+  return data.filter((row) => row.status === statusFilter);
+}, [data, statusFilter]);
 
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
+    state: { sorting },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
     <div className="p-4">
-      <table className="w-full text-sm border border-gray-300">
-        <thead className="bg-gray-100">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} className="border px-3 py-2">
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="hover:bg-gray-50">
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="border px-3 py-2">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+   <table className="w-full border border-gray-300 rounded-lg overflow-hidden text-sm">
+  <thead className="bg-gray-100">
+    {table.getHeaderGroups().map((headerGroup) => (
+      <tr key={headerGroup.id}>
+        {headerGroup.headers.map((header) => (
+          <th
+            key={header.id}
+            onClick={header.column.getToggleSortingHandler()}
+            className="border border-gray-300 px-3 py-2 text-left text-xs font-semibold text-gray-700 uppercase cursor-pointer select-none"
+          >
+            {flexRender(
+              header.column.columnDef.header,
+              header.getContext()
+            )}
+            {
+              {
+                asc: ' 🔼',
+                desc: ' 🔽',
+              }[header.column.getIsSorted() as string] ?? ''
+            }
+          </th>
+        ))}
+      </tr>
+    ))}
+  </thead>
+  <tbody>
+    {table.getRowModel().rows.map((row) => (
+      <tr key={row.id} className="hover:bg-gray-50 text-sm text-gray-800">
+        {row.getVisibleCells().map((cell) => (
+          <td key={cell.id} className="border border-gray-300 px-3 py-2 text-left">
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </td>
+        ))}
+      </tr>
+    ))}
+  </tbody>
+</table>
     </div>
   );
 }
